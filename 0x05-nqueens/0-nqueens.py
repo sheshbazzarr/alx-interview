@@ -1,23 +1,23 @@
 #!/usr/bin/python3
-""" 
-    Description: The N queens puzzle is the challenge of placing N non-attacking 
-                queens on an NXN chessboard. Write a program that solves the N quens p              roblem.
-    Usage: nqueens N:
-        if the  user called the program with the worng number of arguments, 
-        print Usage: nqueens N, followed by a new line , and exit with the status 1
-        
-    where N must be an integer greater or equal to 4:
-        if N is not an integer , print N must be a number, followed by a new line,
-        and exit with the status 1
-        if N is smaller than 4, print N must be at least 4, followed by a new line,
-        and exit with the staus 1
-    The program should print every possible solution to the problem:
-        One solution per line 
-        Format: see example
-        you don't have to print the solutions in a specific order 
-        you are only allowed to import the sys module
 """
-
+   Description: The N queens puzzle is the challenge of placing N non-attacking
+                queens on an N×N chessboard. Write a program that solves the N
+                queens problem.
+   Usage: nqueens N:
+          If the user called the program with the wrong number of arguments,
+          print Usage: nqueens N, followed by a new line, and exit with the
+          status 1
+   where N must be an integer greater or equal to 4:
+          If N is not an integer, print N must be a number, followed by a new
+          line, and exit with the status 1
+          If N is smaller than 4, print N must be at least 4, followed by a new
+          line, and exit with the status 1
+   The program should print every possible solution to the problem:
+          One solution per line
+          Format: see example
+          You don’t have to print the solutions in a specific order
+   You are only allowed to import the sys module
+"""
 
 
 import sys
@@ -25,101 +25,101 @@ import sys
 
 def print_board(board):
     """ print_board
-        Args:
-            board-list of list with length sys.arg[v]
+    Args:
+        board - list of list with length sys.argv[1]
     """
-    new_list =[]
-    for i,row in enumerate(board):
+    new_list = []
+    for i, row in enumerate(board):
         value = []
-        for j,col in enumerate(row):
-            if col ==1:
+        for j, col in enumerate(row):
+            if col == 1:
                 value.append(i)
                 value.append(j)
         new_list.append(value)
 
-print(new_list)
+    print(new_list)
 
 
-def isSafe(board,row,col,number):
+def isSafe(board, row, col, number):
     """ isSafe
     Args:
-        board-list of list with length sys.argv[1]
-        row-row to check if is save doing a movement in this postion
-        col- col to check if is safe doing a movemet in this postion
-        number : size of the board
-    Return : True or False
+        board - list of list with length sys.argv[1]
+        row - row to check if is safe doing a movement in this position
+        col - col to check if is safe doing a movement in this position
+        number: size of the board
+    Return: True of False
     """
 
-    # check this row in the left side
+    # Check this row in the left side
     for i in range(col):
-        if board[row][i]==1:
+        if board[row][i] == 1:
             return False
 
-    #check upper diagonal on left side
-    for i ,j in zip(range(row,-1,-1),range(col,-1,-1)):
-        if board[i][j]==1:
+    # Check upper diagonal on left side
+    for i, j in zip(range(row, -1, -1), range(col, -1, -1)):
+        if board[i][j] == 1:
             return False
-    
-    for i,j in zip(range(row,number,1),range(col,-1,-1)):
-        if board[i][j]==1:
+
+    for i, j in zip(range(row, number, 1), range(col, -1, -1)):
+        if board[i][j] == 1:
             return False
 
     return True
 
 
-def solveNQueen(board,col,number):
-    """Auxilar method to find the posiblities of answer
+def solveNQUtil(board, col, number):
+    """ Auxiliar method to find the posibilities of answer
     Args:
         board - Board to resolve
         col - Number of col
-        number -size of the board
+        number - size of the board
     Returns:
-        All the posiblites to solve the problem
+        All the posibilites to solve the problem
     """
-    if(col == number):
+
+    if (col == number):
         print_board(board)
         return True
     res = False
     for i in range(number):
-        
-        if(isSafe(board,i,col,number)):
-        
+
+        if (isSafe(board, i, col, number)):
+
             # Place this queen in board[i][col]
-            board[i][col]=1
+            board[i][col] = 1
 
-            #Make result true if any placement
-            #is posible
-            res = solvNQueen(board,col+1,number) or res
+            # Make result true if any placement
+            # is possible
+            res = solveNQUtil(board, col + 1, number) or res
 
-            board[i][col] = 0 #BACKTRACK
-
+            board[i][col] = 0  # BACKTRACK
 
     return res
 
 
 def solve(number):
-    """Find all the possiblites if exists
-        Args:
-            number - size of the board
+    """ Find all the posibilities if exists
+    Args:
+        number - size of the board
     """
-    board = [[0 for i in range(number)] for i in range(number)]
+    board = [[0 for i in range(number)]for i in range(number)]
 
-    if not solveNQueen(board,0,number):
+    if not solveNQUtil(board, 0, number):
         return False
 
     return True
 
 
 def validate(args):
-    """ Validate the input data to verify if the size to 
+    """ Validate the input data to verify if the size to
         answer is posible
-        Args:
-            args - sys.argv
+    Args:
+        args - sys.argv
     """
-    if(len(args)==2):
-        #Validate data
+    if (len(args) == 2):
+        # Validate data
         try:
-            number =int(arg[1])
+            number = int(args[1])
         except Exception:
             print("N must be a number")
             exit(1)
@@ -132,11 +132,9 @@ def validate(args):
         exit(1)
 
 
-if __name__ =="__main__":
+if __name__ == "__main__":
     """ Main method to execute the application
     """
-    number= validate(sys.argv)
+
+    number = validate(sys.argv)
     solve(number)
-
-
-
