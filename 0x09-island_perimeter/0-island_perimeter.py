@@ -5,20 +5,7 @@ described in grid
 """
 
 def island_perimeter(grid):
-     """
-    Calculates the perimeter of an island represented by 1's in the grid.
-
-    Parameters:
-    grid (List[List[int]]): A 2D grid (list of lists) where '1' represents land 
-                             and '0' represents water.
-
-    Returns:
-    int: The perimeter of the island (number of edges of the land cells exposed to water).
-    
-    Example:
-    >>> island_perimeter([[0, 1, 0], [1, 1, 0], [0, 1, 0]])
-    8
-    """
+     """ Calculates the perimeter of an island represented by 1's in the grid."""
     perimeter = 0
     grid_length = len(grid)
     
